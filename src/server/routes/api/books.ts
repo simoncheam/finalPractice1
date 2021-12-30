@@ -5,7 +5,7 @@ import booksDB from '../../database/queries/books'
 
 const router = express.Router();
 
-
+//✅ OK
 router.get('/', async (req, res) => {
 
     try {
@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
 
 })
 
+// ✅ OK
 router.get('/:id', async (req, res) => {
 
     const id = Number(req.params.id);
@@ -30,6 +31,7 @@ router.get('/:id', async (req, res) => {
 
         if (!one_book) {
             res.status(404).json({ message: "Book not found" })
+
         } else {
             console.log(one_book);
             res.status(200).json(one_book);
@@ -41,23 +43,25 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+// ✅ OK
 router.put('/:id', async (req: ReqUser, res) => {
 
     const { title, author, price, catid } = req.body; //*tk
     const userid = req.user.id; //*tk
 
-
+    // // *tk
     if (!title || !author || !price || !catid) {
         return res.status(400).json({ message: "Fill out everything!" })
     }
 
-    try {
+    // Q: Do the books have user ownership editing constraints or can any user update/delete any book they want? 
 
+    try {
 
         const id = Number(req.params.id); // *tk
 
 
-        const bookUpdateResults = await booksDB.update({ title, author, price, catid }, id, userid); // *tk
+        const bookUpdateResults = await booksDB.update({ title, author, price, catid }, id); // *tk -- need to add userid contraint to query
 
         if (bookUpdateResults.affectedRows) {
 
@@ -76,18 +80,16 @@ router.put('/:id', async (req: ReqUser, res) => {
     }
 })
 
+
+// ✅ OK
 router.post('/', async (req: ReqUser, res) => {
 
     const userid = req.user.id; //*tk
-
     const { catid, title, author, price  } = req.body;
-
-    if(!title || !author || !price || !catid ) { // *tk
-        
-        return res.status(400).json({ message: "Fill out everything!" })
-    }
-
-
+    
+        if(!title || !author || !price || !catid ) { // *tk post input val
+            return res.status(400).json({ message: "Fill out everything!" })
+        }
 
     try {
         // const results = await DB.get_all();
@@ -117,7 +119,7 @@ router.delete('/:id',tokenCheck, async (req:ReqUser, res) => { // *tk add ReqUse
         const one_book = await booksDB.get_one_by_id(Number(id))
         // const results = await DB.get_all();
 
-        await booksDB.destroy(id);
+        await booksDB.destroy(id, userid);
 
 
     } catch (error) {

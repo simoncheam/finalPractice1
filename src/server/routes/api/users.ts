@@ -8,7 +8,7 @@ import booksDB from '../../database/queries/books'
 
 const router = express.Router();
 
-//get all
+//get all ✅ OK
 router.get('/', async (req, res) => {
 
     try {
@@ -27,10 +27,24 @@ router.get('/', async (req, res) => {
 })
 
 
-// get one
-router.get('/:id', async (req, res) => {
+// get one ✅ OK
+router.get('/:id', async (req: ReqUser, res) => {
+
+    const id = req.params.user_id; // *tk
+
     try {
        // const results = await DB.get_all();
+       const [one_user] = await usersDB.get_one_by_id();
+       delete one_user.password; // *tk
+
+       // *tk validation
+       if(one_user){
+        res.status(404).json({ message: "User not found" })
+
+       }else{
+        res.status(200).json({message:  `User found!`, one_user} ); // *tk
+       }
+
 
         
     } catch (error) {
@@ -39,21 +53,20 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-/// create
+/// create ✅ OK
+router.post('/', async (req: ReqUser, res) => {
 
-router.post('/', async (req, res) => {
+    const { name, email, password }: Users = req.body; // *tk
 
-    const { name, email, password }: Users = req.body;
-
-    if (!name || !email || !password) {  // input validation
+    if (!name || !email || !password) {  // input validation // *tk
         return res.status(400).json({ message: "Fill out everything!" })
     }
 
 
     try {
        // const results = await DB.get_all();
-       const userResults = await usersDB.create({name, email, password})
-       res.status(201).json({ message: "User create!", id: userResults.insertId });
+       const userResults = await usersDB.create({name, email, password}) // *tk
+       res.status(201).json({ message: "User create!", id: userResults.insertId }); // *tk
 
     } catch (error) {
         console.log(error);
@@ -63,15 +76,15 @@ router.post('/', async (req, res) => {
 
 // update - need this?
 
-// delete
+// delete ✅ OK
 
 router.delete('/:id', async (req, res) => {
 
-    const id = Number(req.params.id);
+    const id = Number(req.params.id); // *tk
 
     try {
        // const results = await DB.get_all();
-        await usersDB.destroy(id)
+        await usersDB.destroy(id) // *tk
         res.status(200).json({message: "User Deleted!"});
         
     } catch (error) {
