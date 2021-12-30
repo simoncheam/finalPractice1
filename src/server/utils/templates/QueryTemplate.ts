@@ -17,9 +17,8 @@ const update = (book: Books, id: Books['id'], userid: number) => Query("UPDATE B
 
 
 //post
-const create = (new_book: Books) => {
-    return Query(`INSERT INTO Books SET ?`, [new_book]);
-}
+const create = (new_book: Books) => Query(`INSERT INTO Books SET ?`, [new_book]);
+
 
 
 //delete

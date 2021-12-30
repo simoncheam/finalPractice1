@@ -17,3 +17,12 @@ const create = (new_user: Users) => Query(`INSERT INTO Users SET ?`, [new_user])
 
 //delete ✅ OK
 const destroy = (id: Users['id']) => Query("DELETE FROM Users WHERE id=?", [id ]);
+
+export default {
+    get_all,
+    get_one_by_id,
+    create,
+    update,
+    destroy
+
+};

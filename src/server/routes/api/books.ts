@@ -46,11 +46,11 @@ router.get('/:id', async (req, res) => {
 // ✅ OK
 router.put('/:id', async (req: ReqUser, res) => {
 
-    const { title, author, price, catid } = req.body; //*tk
-    const userid = req.user.id; //*tk
+    const { title, author, price, categoryid } = req.body; //*tk
+    //const userid = req.user.id; //*tk
 
     // // *tk
-    if (!title || !author || !price || !catid) {
+    if (!title || !author || !price || !categoryid) {
         return res.status(400).json({ message: "Fill out everything!" })
     }
 
@@ -61,7 +61,7 @@ router.put('/:id', async (req: ReqUser, res) => {
         const id = Number(req.params.id); // *tk
 
 
-        const bookUpdateResults = await booksDB.update({ title, author, price, catid }, id); // *tk -- need to add userid contraint to query
+        const bookUpdateResults = await booksDB.update({ title, author, price, categoryid }, id); // *tk -- need to add userid contraint to query
 
         if (bookUpdateResults.affectedRows) {
 
@@ -84,18 +84,23 @@ router.put('/:id', async (req: ReqUser, res) => {
 // ✅ OK
 router.post('/', async (req: ReqUser, res) => {
 
-    const userid = req.user.id; //*tk
-    const { catid, title, author, price  } = req.body;
+    console.log('INSIDE Book POST REQ');
+
+    //const userid = req.user.id; //*tk
+    const { categoryid, title, author, price  } = req.body;
     
-        if(!title || !author || !price || !catid ) { // *tk post input val
+        if(!title || !author || !price || !categoryid ) { // *tk post input val
             return res.status(400).json({ message: "Fill out everything!" })
         }
 
     try {
-        // const results = await DB.get_all();
-        const bookResults = await booksDB.create({title, author, price, catid})
 
-        res.status(201).json({ message: "Book created!" });
+    console.log('INSIDE Book POST REQ ---- TRY BLOCK');
+
+        // const results = await DB.get_all();
+        const bookResults = await booksDB.create({title, author, price, categoryid})
+
+        res.status(201).json({ message: "Book created!", bookResults });
 
 
     } catch (error) {
@@ -104,14 +109,14 @@ router.post('/', async (req: ReqUser, res) => {
     }
 })
 
-router.delete('/:id',tokenCheck, async (req:ReqUser, res) => { // *tk add ReqUser
+router.delete('/:id', async (req:ReqUser, res) => { // *tk add ReqUser
 
     const id = Number(req.params.id); // *tk add to delete
-    const userid = req.user.id;
+    //const userid = req.user.id;
 
-    if(!userid){ // *tk
-        return res.status(403).json({ message: "You are not authorized to edit this." })
-    }
+    // if(!userid){ // *tk
+    //     return res.status(403).json({ message: "You are not authorized to edit this." })
+    // }
 
 
     try {
@@ -119,7 +124,10 @@ router.delete('/:id',tokenCheck, async (req:ReqUser, res) => { // *tk add ReqUse
         const one_book = await booksDB.get_one_by_id(Number(id))
         // const results = await DB.get_all();
 
-        await booksDB.destroy(id, userid);
+        await booksDB.destroy(id);
+        res.status(200).json({message: "Book Deleted" } );
+
+
 
 
     } catch (error) {
