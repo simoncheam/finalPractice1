@@ -20,6 +20,12 @@ export interface Users {
     _created?: string
 }
 
+
+export interface Payload extends UsersTable {
+    id?: number;
+    role?:number;
+}
+
 export interface Books {
     id?: number;
     categoryid?: number;
