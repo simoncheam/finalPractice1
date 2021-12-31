@@ -123,6 +123,7 @@ router.post('/', passport.authenticate('local'), async ( req: ReqUser, res) => {
 });
 
 
+export default router;
 
 
 
@@ -130,5 +131,4 @@ router.post('/', passport.authenticate('local'), async ( req: ReqUser, res) => {
 //        ------------------------
 
 
-export default router;
 */
