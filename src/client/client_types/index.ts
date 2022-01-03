@@ -1,5 +1,4 @@
-import { Request } from 'express';
-import { UsersTable } from '../database/models';
+
 
 export interface MySQL_Default_Response {
     insertId: number;
@@ -21,10 +20,7 @@ export interface Users {
 }
 
 
-export interface Payload extends UsersTable {
-    id?: number;
-    role?:number;
-}
+
 
 export interface Books {
     id?: number;
