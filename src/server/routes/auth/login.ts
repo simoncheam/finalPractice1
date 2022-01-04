@@ -9,8 +9,8 @@ const router = Router();
 
 router.post('/', passport.authenticate('local'), async ( req: ReqUser, res) => {
 
+    console.log('--- INSIDE LOGIN.TS POST ROUTE!');
     try {
-        console.log('--- INSIDE LOGIN.TS POST ROUTE!');
         
         const token = jwt.sign(
             { id: req.user.id, email: req.user.email},

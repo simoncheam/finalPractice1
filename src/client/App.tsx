@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import BookDetail from './views/BookDetail';
+import Books from './views/Books';
 import Home from './views/Home';
+import Login from './views/Login';
+import NewBook from './views/NewBook';
+import NotFound from './views/NotFound';
+import Register from './views/Register';
+import Update from './views/Update';
 
 
 const App = (props: AppProps) => {
@@ -9,7 +16,7 @@ const App = (props: AppProps) => {
 	return (
 <>
 		<BrowserRouter>
-				<Navbar />
+				{/* <Navbar /> */}
 
 				<div className="container">
 					<Routes>
@@ -25,7 +32,7 @@ const App = (props: AppProps) => {
 						<Route path="/login" element={<Login/>}></Route>
 
 						{/* books */}
-						<Route path="/books" element={< Books />}></Route>
+						<Route path="/books" element={<Books />}></Route>
 
 						{/* books/new */}
 						<Route path="/books/new" element={<NewBook />}></Route>
@@ -52,9 +59,10 @@ const App = (props: AppProps) => {
 				</div>
 			</BrowserRouter>
 			
-		<main className="container my-5">
+		{/* <main className="container my-5">
 			<h1 className="text-primary text-center">Hello </h1>
-		</main>
+		</main> */}
+
 </>
 	);
 };
