@@ -54,7 +54,7 @@ router.put('/:id', async (req: ReqUser, res) => {
         return res.status(400).json({ message: "Fill out everything!" })
     }
 
-    // Q: Do the books have user ownership editing constraints or can any user update/delete any book they want? 
+ 
 
     try {
 

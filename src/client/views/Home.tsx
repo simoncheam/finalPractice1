@@ -3,9 +3,8 @@ import React from 'react'
 const Home = () => {
     return (
         <div>
-            <h1 className="display-3 m-3 text-center"> Homepage </h1>
-
-            
+           <h1 className="display-3 m-3 text-center"> Welcome to the Bookstore </h1>
+ 
         </div>
     )
 }
