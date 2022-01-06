@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Books, Categories } from '../client_types';
-import { APIService, TOKEN_KEY } from '../services/APIService';
+import { APIService } from '../services/APIService';
 
 const Books = () => {
 
@@ -31,25 +31,31 @@ const Books = () => {
 
     return (
         <div>
-            <h1 className="display-3 m-3 text-center"> Bookspage - welcome to the bookstore! </h1>
+            <h1 className="display-3 m-3 text-center"> Book Listing  </h1>
 
             {/* map cards */}
             <div className="">
                 {books.map(book => (
                     <div className="row m-2 justify-content-center" key={`book-${book.id}`}>
-                        <div className="card m-3 col-12 col-md-6">
+                        <div className="card col-12 col-md-6">
 
-
+                            {/* header */}
                             <div className="card-header">
-
                                 <p>{book.title}</p>
                             </div>
-                            <div className="card body">
 
-                                <p>{book.author}</p>
-                                <p>{book.price}</p>
+                            {/* body */}
+                            <div className="card-body">
+
+                                <p>Author: {book.author}</p>
+                                <p>Price: {book.price.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                })}</p>
                             </div>
-                            <Link to={`/books/${book.id}`} className='btn btn-primary mx-2'>
+
+                            {/* read more link */}
+                            <Link to={`/books/${book.id}`} className='btn btn-primary m-2'>
                                 Read More
                             </Link>
 

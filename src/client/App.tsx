@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import BookDetail from './views/BookDetail';
 import Books from './views/Books';
 import Home from './views/Home';
@@ -16,7 +17,7 @@ const App = (props: AppProps) => {
 	return (
 <>
 		<BrowserRouter>
-				{/* <Navbar /> */}
+				<Navbar />
 
 				<div className="container">
 					<Routes>
@@ -31,11 +32,11 @@ const App = (props: AppProps) => {
 						{/* Login */}
 						<Route path="/login" element={<Login/>}></Route>
 
-						{/* books */}
-						<Route path="/books" element={<Books />}></Route>
-
 						{/* books/new */}
 						<Route path="/books/new" element={<NewBook />}></Route>
+						{/* books */}
+						<Route path="/books" element={<Books/>}></Route>
+
 
 						{/* books/:id/update */}
 						<Route path="/books/:id/update" element={<Update />}></Route>

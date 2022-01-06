@@ -2,7 +2,15 @@ export const TOKEN_KEY = 'token';
 
 export async function APIService<T = any>(uri: string, method: string= 'GET', data?: {}){
 
+    //Q: can we review this? is this workflow appropiate, setting token on each APIservice fetch?
     const TOKEN = localStorage.getItem(TOKEN_KEY);
+    localStorage.setItem(TOKEN_KEY, TOKEN)
+    console.log({TOKEN});
+
+    //Q: why did I have to put this back in? APIservice not set up correctly
+    // const token = localStorage.getItem(TOKEN_KEY);
+    // localStorage.setItem(TOKEN_KEY, token)
+    // console.log(token);
 
     const headers: HeadersInit = {
         'Content-Type': 'application/json'

@@ -19,6 +19,8 @@ const NewBook = () => {
     // load categories
     useEffect(() => {
 
+        // ! need to add validate route check, Q: in addition to navbar check
+
         APIService('/api/categories')
             .then(data => {
                 setCategory(data)
@@ -38,9 +40,12 @@ const NewBook = () => {
     const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        const token = localStorage.getItem(TOKEN_KEY);
-        localStorage.setItem(TOKEN_KEY, token)
-        console.log({ token });
+        //Q: why did I have to put this back in? APIservice not set up correctly
+        // const token = localStorage.getItem(TOKEN_KEY);
+        // localStorage.setItem(TOKEN_KEY, token)
+        // console.log(token);
+
+        // Q: 1/5: token is valid then getting 401 when trying to create new book, error seems to be coming from APIService or Navbar, book is still writing to db
 
         if (!title || !author || !price || !selectedCategoryid) {
             return alert('please fill out all fields');
@@ -55,7 +60,9 @@ const NewBook = () => {
 
         })
             .then(data => {
-                localStorage.setItem('token', data.token);
+                //! dont do this - possible cause of issue
+                // localStorage.setItem('token', data.token); //!
+                console.log({data});
                 nav('/books')
             })
             .catch(e => {
