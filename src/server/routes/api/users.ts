@@ -32,19 +32,19 @@ router.get('/', async (req, res) => {
 // get one ✅ OK
 router.get('/:id', async (req: ReqUser, res) => {
 
-    const id = req.params.id; // *tk
+    const id = req.params.id; 
 
     try {
        // const results = await DB.get_all();
        const [one_user] = await usersDB.get_one_by_id(Number(id));
-       delete one_user.password; // *tk
+       delete one_user.password; 
 
-       // *tk validation
+       
        if(!one_user){
         res.status(404).json({ message: "User not found" })
 
        }else{
-        res.status(200).json({message:  `User found!`, one_user} ); // *tk
+        res.status(200).json({message:  `User found!`, one_user} ); 
        }
 
 
@@ -58,17 +58,17 @@ router.get('/:id', async (req: ReqUser, res) => {
 /// create ✅ OK
 router.post('/', async (req: ReqUser, res) => {
 
-    const { name, email, password }: Users = req.body; // *tk
+    const { name, email, password }: Users = req.body; 
 
-    if (!name || !email || !password) {  // input validation // *tk
+    if (!name || !email || !password) {  // input validation //
         return res.status(400).json({ message: "Fill out everything!" })
     }
 
 
     try {
        // const results = await DB.get_all();
-       const userResults = await usersDB.create({name, email, password}) // *tk
-       res.status(201).json({ message: "User create!", id: userResults.insertId }); // *tk
+       const userResults = await usersDB.create({name, email, password}) 
+       res.status(201).json({ message: "User create!", id: userResults.insertId }); 
 
     } catch (error) {
         console.log(error);
@@ -82,11 +82,11 @@ router.post('/', async (req: ReqUser, res) => {
 
 router.delete('/:id', async (req, res) => {
 
-    const id = Number(req.params.id); // *tk
+    const id = Number(req.params.id); 
 
     try {
        // const results = await DB.get_all();
-        await usersDB.destroy(id) // *tk
+        await usersDB.destroy(id) 
         res.status(200).json({message: "User Deleted!"});
         
     } catch (error) {

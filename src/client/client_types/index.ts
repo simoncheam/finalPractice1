@@ -29,6 +29,7 @@ export interface Books {
     author?: string;
     price?: number;
     _created?: string;
+    categoryName?: string;
 
 }
 

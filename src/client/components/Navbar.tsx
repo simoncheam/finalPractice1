@@ -13,19 +13,27 @@ const Navbar = () => {
 
     useEffect(() => {
 
-        
+        const publicPages = [ 'books', '/login', '/register']
 
+        console.log(loc);
         APIService(`/auth/validate`)
             .then(res => {
-                const tokenStatus = res.one_user ? true : false;
+                //const tokenStatus = res.ok;  // 
+                const tokenStatus = res.message === 'valid'
                 setIsAuthed(tokenStatus)
             })
             .catch(error => {
+
+
+                
                 setIsAuthed(false)
                 console.log(error);
                 // alert('bad token - NAVBAR error');
-                nav('/login');
+                //conditional path logic - check array of approved paths
+               // nav('/login'); 
             });
+
+            //! array of allowed paths
 
     }, [loc.pathname])
 

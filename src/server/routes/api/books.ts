@@ -46,10 +46,9 @@ router.get('/:id', async (req, res) => {
 // ✅ OK
 router.put('/:id', async (req: ReqUser, res) => {
 
-    const { title, author, price, categoryid } = req.body; //*tk
-    //const userid = req.user.id; //*tk
+    const { title, author, price, categoryid } = req.body; 
 
-    // // *tk
+    
     if (!title || !author || !price || !categoryid) {
         return res.status(400).json({ message: "Fill out everything!" })
     }
@@ -58,17 +57,17 @@ router.put('/:id', async (req: ReqUser, res) => {
 
     try {
 
-        const id = Number(req.params.id); // *tk
+        const id = Number(req.params.id); 
 
 
-        const bookUpdateResults = await booksDB.update({ title, author, price, categoryid }, id); // *tk -- need to add userid contraint to query
+        const bookUpdateResults = await booksDB.update({ title, author, price, categoryid }, id); 
 
         if (bookUpdateResults.affectedRows) {
 
-            res.status(201).json({ message: "Updated Book!" }); //*tk
+            res.status(201).json({ message: "Updated Book!" }); 
 
         } else {
-            res.status(401).json({ message: "Not authorized!" }) //*tk;    
+            res.status(401).json({ message: "Not authorized!" })    
         }
 
 
@@ -86,10 +85,9 @@ router.post('/', async (req: ReqUser, res) => {
 
     console.log('INSIDE Book POST REQ');
 
-    //const userid = req.user.id; //*tk
     const { categoryid, title, author, price  } = req.body;
     
-        if(!title || !author || !price || !categoryid ) { // *tk post input val
+        if(!title || !author || !price || !categoryid ) { 
             return res.status(400).json({ message: "Fill out everything!" })
         }
 
@@ -109,14 +107,12 @@ router.post('/', async (req: ReqUser, res) => {
     }
 })
 
-router.delete('/:id', async (req:ReqUser, res) => { // *tk add ReqUser
+router.delete('/:id', async (req:ReqUser, res) => { 
 
-    const id = Number(req.params.id); // *tk add to delete
+    const id = Number(req.params.id); // 
     //const userid = req.user.id;
 
-    // if(!userid){ // *tk
-    //     return res.status(403).json({ message: "You are not authorized to edit this." })
-    // }
+    
 
 
     try {

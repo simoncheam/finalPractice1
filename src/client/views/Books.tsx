@@ -11,20 +11,61 @@ const Books = () => {
 
     // set state books
     const [books, setBooks] = useState<Books[]>([])
+    const [categories, setCategories] = useState<Categories[]>([])
 
 
     //ue
 
     useEffect(() => {
 
-        APIService(`/api/books`)
+        // Attaching category name to books array:
 
+        // fetch all categories
+        APIService(`/api/categories`)
             .then(data => {
-                setBooks(data);
+               // setCategories(data);
+               // console.log({ categories });
+
+                APIService(`/api/books`)
+
+                    .then(books => {
+                        // setBooks(data);
+
+                        // define books with category names = array of books, where each book is a regular book with a categoryName prop added
+                        // map through books
+                        const booksWithCatNames = books.map(book => {
+                            // filter through categories
+                            const [catName] = data.filter(
+
+                                // Where categoryid matches book catID
+
+                                // Map filtered array, and from the whole cat object, we return just the category name string(cat.name)
+                                cat => cat.id === book.categoryid)
+                                const name = catName.name; 
+                                
+                                //.map(cat => cat.name);
+
+                            //then we return an object repreprenting a book with all book props spread out, PLUS categoryName added
+                            return { ...book, categoryName: name }
+                        })
+                        setBooks(booksWithCatNames)
+                        console.log({ booksWithCatNames });
+
+                        /* 
+                        
+                        */
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             })
             .catch(error => {
                 console.log(error);
             });
+
+
+
+
 
     }, [])
 
@@ -48,6 +89,7 @@ const Books = () => {
                             <div className="card-body">
 
                                 <p>Author: {book.author}</p>
+                                <p>Category: {book.categoryName}</p>
                                 <p>Price: {book.price.toLocaleString('en-US', {
                                     style: 'currency',
                                     currency: 'USD',

@@ -40,10 +40,7 @@ const NewBook = () => {
     const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        //Q: why did I have to put this back in? APIservice not set up correctly
-        // const token = localStorage.getItem(TOKEN_KEY);
-        // localStorage.setItem(TOKEN_KEY, token)
-        // console.log(token);
+       
 
         // Q: 1/5: token is valid then getting 401 when trying to create new book, error seems to be coming from APIService or Navbar, book is still writing to db
 
